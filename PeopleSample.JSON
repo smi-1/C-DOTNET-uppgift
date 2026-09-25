@@ -1,32 +1,34 @@
 [
-  {
-    "PersonInfo": {
-      "FirstName": "Namn 1",
-      "LastName": "Andersson"
-    },
-    "AdressInfo": {
-      "Street": "Storgatan 12",
-      "PostalCode": "111 22",
-      "City": "Stockholm"
-    },
-    "CompanyInfo": {
-      "CompanyName": "Exempel AB",
-      "OrganizationNumber": "556123-4567"
-    }
-  },
-  {
-    "PersonInfo": {
-      "FirstName": "Namn 2",
-      "LastName": "Karlsson"
-    },
-    "AdressInfo": {
-      "Street": "Kungsgatan 8",
-      "PostalCode": "411 10",
-      "City": "Göteborg"
-    },
-    "CompanyInfo": {
-      "CompanyName": "Testbolaget AB",
-      "OrganizationNumber": "559123-4567"
-    }
-  }
-]
+            {
+            "PersonInfo": {
+            "IdNumber": 123456,
+            "Name": "Namn 1",
+            "Email": "mail1@exempel.se"
+            },
+            "AddressInfo": {
+            "Street": "Storgatan 12",
+            "PostalCode": 11123,
+            "City": "Stockholm"
+            },
+            "CompanyInfo": {
+            "Name": "Exempel 1 AB",
+            "Slogan": "AHA! moment"
+            }
+        },
+        {
+            "PersonInfo": {
+            "IdNumber": 123457,
+            "Name": "Namn 2",
+            "Email": "mail2@exempel.se"
+            },
+            "AddressInfo": {
+            "Street": "Storgatan 12",
+            "PostalCode": 11123,
+            "City": "Stockholm"
+            },
+            "CompanyInfo": {
+            "Name": "Exempel 2 AB",
+            "Slogan": "VA?! moment"
+            }
+        }
+        ]
