@@ -26,9 +26,9 @@ public class PersonInfo {
 public class AddressInfo {
     public string Street {get;set;}
     public string City {get;set;}
-    public int PostalCode {get;set;}
+    public string PostalCode {get;set;}
 
-    public AddressInfo(string street, string city, int postalCode) {
+    public AddressInfo(string street, string city, string postalCode) {
         Street = street;
         City = city;
         PostalCode = postalCode;
