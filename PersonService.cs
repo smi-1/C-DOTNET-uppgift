@@ -22,30 +22,44 @@ public class PersonService : IPersonSource
     {
         return await _source.GetPeople();
     }
-    public void GetAndSortFirst5()
+    public async Task GetFirstFiveSortedByName()
     {
-
-        Console.WriteLine($"SORT THIS: {_source.GetPeople()}");
-        
-    }
-    public void SortById(Sample sample)
-    {
-        List<Person>? people = JsonSerializer.Deserialize<List<Person>>(sample.PeopleSample) ?? new List<Person>();
-        PersonListXS.Clear();
-
-        var sortedList = people.OrderBy(g => g.PersonInfo.IdNumber);
+        List<Person> people = await GetPeople();
+        var sortedList = people.OrderBy(g => g.PersonInfo.Name).Take(5);
         foreach (var item in sortedList) { 
             Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
         }
     }
-    public void SortByName(Sample sample)
+    public async Task GetFirstFiveSortedById()
     {
-        List<Person>? people = JsonSerializer.Deserialize<List<Person>>(sample.PeopleSample) ?? new List<Person>();
-        PersonListXS.Clear();
-
-        var sortedList = people.OrderBy(g => g.PersonInfo.Name).ToList();
-        foreach (var item in people.OrderBy(p => p.PersonInfo.Name.ToList())) { 
+        List<Person> people = await GetPeople();
+        var sortedList = people.OrderBy(g => g.PersonInfo.IdNumber).Take(5);
+        foreach (var item in sortedList) {
             Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
+        }
+    }
+    public async Task GetAllSortedById()
+    {
+        List<Person> people = await GetPeople();
+        var sortedList = people.OrderBy(g => g.PersonInfo.IdNumber);
+        foreach (var item in sortedList) {
+            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
+        }
+    }
+    public async Task GetAllSortedByName()
+    {
+        List<Person> people = await GetPeople();
+        var sortedList = people.OrderBy(g => g.PersonInfo.Name).ToList();
+        foreach (var item in sortedList) {
+            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
+        }
+    }
+    public async Task SearchPersonByName(string searchString)
+    {
+        List<Person> people = await GetPeople();
+        var searchResults = people.Where(p => p.PersonInfo.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+        foreach (var item in searchResults) {
+            Console.WriteLine($"Search result: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
         }
     }
 }

@@ -14,15 +14,9 @@ namespace Register {
             );
             */
 
-            //PersonService personList = new PersonService();
-            //IPersonSource source = new JsonDataFileSource("PeopleSample.JSON");
-            // personList.AddPerson(person);
             Sample sample = new Sample();
-            
-            // personList.GetPeople(sample);
             SampleAPI api = new SampleAPI();
-           
-            //personList.GetAndSortFirst5(sample);
+
             var run = true;
             while (run) {
                 Console.WriteLine("g = Get and sort first 5, q = Quit");
@@ -39,15 +33,20 @@ namespace Register {
                 else if (input == "2") {
                     IPersonSource source = new SampleAPI();
                     PersonService service = new PersonService(source);
-                    List<Person> people = await service.GetPeople();
-                    service.GetAndSortFirst5();
+                    
+                    await service.GetFirstFiveSortedByName();
                 }
-                else if (input == "5") {
-                    //SampleAPI.GetPeopleAsync();
+                else if (input == "3") {
                     IPersonSource source = new JsonDataFileSource("PeopleSample.JSON");
                     PersonService service = new PersonService(source);
-                    List<Person> people = await service.GetPeople();
-                    service.GetAndSortFirst5();
+                    
+                    await service.GetFirstFiveSortedByName();
+                }
+                else if (input == "5") {
+                    IPersonSource source = new JsonDataFileSource("PeopleSample.JSON");
+                    PersonService service = new PersonService(source);
+                    
+                    await service.GetFirstFiveSortedByName();
 
                 }
                 else if (input == "6") {
