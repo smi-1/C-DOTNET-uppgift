@@ -5,8 +5,7 @@ public class PersonService : IPersonSource
 {
     public List<Person> People { get; set; }
     List<string> PersonListXS {get;set;} = new List<string>();
-    private IPersonSource _source;
-    private IPersonSource _content;
+    private readonly IPersonSource _source;
 
     public PersonService(IPersonSource source)
     {
