@@ -55,10 +55,26 @@ public class PersonService : IPersonSource
     }
     public async Task SearchPersonByName(string searchString)
     {
-        List<Person> people = await GetPeople();
-        var searchResults = people.Where(p => p.PersonInfo.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
-        foreach (var item in searchResults) {
-            Console.WriteLine($"Search result: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
+        if (searchString == " ") {
+            Console.WriteLine("Searching with empty space is invalid");
+            return;
         }
+        else if (searchString.Length == 0) {
+            Console.WriteLine("Searching with empty string is invalid");
+            return;
+        }
+        List<Person> people = await GetPeople();
+        var searchResults = people.Where(p => p.PersonInfo.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).OrderBy(p => p.PersonInfo.IdNumber).ToList();
+        if (searchResults.Count == 0) {
+            Console.WriteLine($"No results found for search string: {searchString}");
+            return;
+        }
+        else
+        {
+            foreach (var item in searchResults) {
+                Console.WriteLine($"Search result: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
+            }
+        }
+
     }
 }

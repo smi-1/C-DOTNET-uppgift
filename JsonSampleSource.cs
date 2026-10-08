@@ -27,6 +27,22 @@ public class JsonSampleSource : IPersonSource
             },
             {
                 "PersonInfo": {
+                    "IdNumber": 123456,
+                    "Name": "Bubblan A",
+                    "Email": "bubblan.a@smurf.se"
+                },
+                "AddressInfo": {
+                    "Street": "Smurfstigen 12",
+                    "PostalCode": "11123",
+                    "City": "Smurfbyn"
+                },
+                "CompanyInfo": {
+                    "Name": "BubbelSmurf AB",
+                    "Slogan": "Blått, bubbligt och bäst"
+                }
+            },
+            {
+                "PersonInfo": {
                     "IdNumber": 147829,
                     "Name": "Zippra Z",
                     "Email": "zippra.z@svamp.se"

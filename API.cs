@@ -12,10 +12,10 @@ public class Company
     public string? CatchPhrase { get; private set; }
 }
 
-public class SampleAPI : IPersonSource
+public class API : IPersonSource
 {   
     public static List<Person>? apiPeopleList {get;set;}
-    public SampleAPI()
+    public API()
     {
         
     }

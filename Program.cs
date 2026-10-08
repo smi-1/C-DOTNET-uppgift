@@ -5,43 +5,92 @@ using System.Threading.Tasks;
 namespace Register {
     class Program {
         static async Task Main(string[] args) {
+            if (args.Length > 0)
+            {
+                foreach (var arg in args)
+                {
+                    Console.WriteLine($"CMD LINE ARGUMENT: {arg}");
+                }
+            }  
+            else {
+            PersonService? service = null;
+            
             var run = true;
+            int menu = 1;
             while (run) {
-                Console.WriteLine("Enter 'q' to quit or numbers to select action");
-                var input = Console.ReadLine()?.Trim() ?? "";
+                if (menu == 1)
+                    {
+                        Console.WriteLine(@"
+Select the source you want
+
+1 = Json sample data, 2 = JsonDataFile, 3 = API
+");
+                    }
+                else if (menu == 2)
+                    {
+                        Console.WriteLine(@"
+1 = GetFirstFiveSortedByName, 2 = GetFirstFiveSortedById, 3 = GetAllSortedById, 4 = GetAllSortedByName, 5 = SearchPersonByName
+
+r = return to main menu");
+                    }
+                Console.WriteLine("q = exit program");
                 
+                string input = Console.ReadLine()?.Trim() ?? "";
                 if (input == "q") {
                     run = false;
                 }
-                else if (input == "1") {
-                    IPersonSource source = new JsonSampleSource();
-                    PersonService service = new PersonService(source);
-                    
-                    await service.GetFirstFiveSortedByName();
+                else if (menu == 1) {
+                    if (input == "1") {
+                        service = new PersonService(new JsonSampleSource());
+                        Console.WriteLine("Selected JsonSampleSource as source");
+                        menu = 2;
+                    }
+                    else if (input == "2") {
+                        service = new PersonService(new JsonDataFileSource("PeopleSample.JSON"));
+                        Console.WriteLine("Selected JsonDataFileSource as source");
+                        menu = 2;
+                    }
+                    else if (input == "3") {
+                        service = new PersonService(new API());
+                        Console.WriteLine("Selected API as source");
+                        menu = 2;
+                    } 
+                    else
+                    {
+                        Console.WriteLine("Option not available");
+                    }
                 }
-                else if (input == "2") {
-                    IPersonSource source = new SampleAPI();
-                    PersonService service = new PersonService(source);
-                    
-                    await service.GetFirstFiveSortedByName();
-                }
-                else if (input == "3") {
-                    IPersonSource source = new JsonDataFileSource("PeopleSample123.JSON");
-                    PersonService service = new PersonService(source);
-                    
-                    await service.GetFirstFiveSortedByName();
-                }
-                else if (input == "5") {
-                    IPersonSource source = new JsonDataFileSource("PeopleSample.JSON");
-                    PersonService service = new PersonService(source);
-                    
-                    await service.GetFirstFiveSortedByName();
-
-                }
-                else if (input == "6") {
-                    
-                }
+                else if (menu == 2 && service != null)
+                    {
+                    if (input == "1") {
+                        await service.GetFirstFiveSortedByName();
+                    }
+                    else if (input == "2") {
+                        await service.GetFirstFiveSortedById();
+                    }
+                    else if (input == "3") {
+                        await service.GetAllSortedById();
+                    }
+                    else if (input == "4") {
+                        await service.GetAllSortedByName();
+                    }
+                    else if (input == "5") {
+                        Console.Write("Enter name to search: ");
+                        string search = Console.ReadLine()?.Trim() ?? "";
+                        await service.SearchPersonByName(search);
+                    }
+                    else if (input == "r") {
+                        menu = 1;
+                        Console.WriteLine("Returned to main menu");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Option not available");
+                    }
+                    }
+            
             }
+        }
         }
     }
 }
