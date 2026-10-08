@@ -11,7 +11,7 @@ namespace Register {
                 {
                     Console.WriteLine($"CMD LINE ARGUMENT: {arg}");
                 }
-            }  
+            }
             else {
             PersonService? service = null;
             
