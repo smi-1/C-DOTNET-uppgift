@@ -4,11 +4,28 @@ using System.Text.Json;
 public class JsonSampleSource : IPersonSource
 {
     public string PeopleSample { get; set; }
-    public JsonSampleSource() {
+    public JsonSampleSource()
+    {
 
         PeopleSample =
         """
         [
+                {
+                "PersonInfo": {
+                    "IdNumber": 100000,
+                    "Name": "Luke Skywalker",
+                    "Email": "luke@starwars.se"
+                },
+                "AddressInfo": {
+                    "Street": "Galaxvägen 1",
+                    "PostalCode": "1",
+                    "City": "Citadel"
+                },
+                "CompanyInfo": {
+                    "Name": "Rymdutforskarna AB",
+                    "Slogan": "May the force be with you"
+                }
+            },
             {
                 "PersonInfo": {
                     "IdNumber": 583214,
@@ -188,7 +205,7 @@ public class JsonSampleSource : IPersonSource
         ]
         """;
     }
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
         PropertyNameCaseInsensitive = true
@@ -200,11 +217,13 @@ public class JsonSampleSource : IPersonSource
 
             List<Person>? people = JsonSerializer.Deserialize<List<Person>>(PeopleSample, _jsonOptions) ?? new List<Person>();
             return people;
-   
-        } catch (Exception ex) {
+
+        }
+        catch (Exception ex)
+        {
             Console.WriteLine($"Error deserializing JSON string: {ex.Message}");
             return new List<Person>();
         }
     }
-    
+
 }

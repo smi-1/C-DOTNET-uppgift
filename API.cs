@@ -46,7 +46,6 @@ public class API : IPersonSource
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
         var people = JsonSerializer.Deserialize<List<APIPerson>>(jsonResponse, _jsonOptions) ?? new List<APIPerson>();
-        Console.WriteLine($"API People Count: {people.Count}");
         apiPeopleList = people.Select(p => p.ToPerson()).ToList();
         return apiPeopleList;
     }

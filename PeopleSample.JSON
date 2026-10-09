@@ -1,5 +1,20 @@
-
 [
+    {
+        "PersonInfo": {
+            "IdNumber": 100000,
+            "Name": "Luke Skywalker",
+            "Email": "luke@starwars.se"
+        },
+        "AddressInfo": {
+            "Street": "Galaxvägen 1",
+            "PostalCode": "1",
+            "City": "Citadel"
+        },
+        "CompanyInfo": {
+            "Name": "Rymdutforskarna AB",
+            "Slogan": "May the force be with you"
+        }
+    },
     {
         "PersonInfo": {
             "IdNumber": 583214,

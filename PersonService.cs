@@ -21,48 +21,40 @@ public class PersonService : IPersonSource
     {
         return await _source.GetPeople();
     }
+    public static void Print(IEnumerable<Person> sortedList)
+    {
+            foreach (var item in sortedList) { 
+            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
+        }
+    }
+
     public async Task GetFirstFiveSortedByName()
     {
         List<Person> people = await GetPeople();
-        var sortedList = people.OrderBy(g => g.PersonInfo.Name).Take(5);
-        foreach (var item in sortedList) { 
-            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
-        }
+        Print(people.OrderBy(g => g.PersonInfo.Name).Take(5));
     }
     public async Task GetFirstFiveSortedById()
     {
         List<Person> people = await GetPeople();
-        var sortedList = people.OrderBy(g => g.PersonInfo.IdNumber).Take(5);
-        foreach (var item in sortedList) {
-            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
-        }
+        Print(people.OrderBy(g => g.PersonInfo.IdNumber).Take(5));
     }
     public async Task GetAllSortedById()
     {
         List<Person> people = await GetPeople();
-        var sortedList = people.OrderBy(g => g.PersonInfo.IdNumber);
-        foreach (var item in sortedList) {
-            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
-        }
+        Print(people.OrderBy(g => g.PersonInfo.IdNumber));
     }
     public async Task GetAllSortedByName()
     {
         List<Person> people = await GetPeople();
-        var sortedList = people.OrderBy(g => g.PersonInfo.Name).ToList();
-        foreach (var item in sortedList) {
-            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
-        }
+        Print(people.OrderBy(g => g.PersonInfo.Name));
     }
     public async Task SearchPersonByName(string searchString)
     {
-        if (searchString == " ") {
-            Console.WriteLine("Searching with empty space is invalid");
+        if (string.IsNullOrWhiteSpace(searchString)) {
+            Console.WriteLine("Search string cannot be empty");
             return;
         }
-        else if (searchString.Length == 0) {
-            Console.WriteLine("Searching with empty string is invalid");
-            return;
-        }
+
         List<Person> people = await GetPeople();
         var searchResults = people.Where(p => p.PersonInfo.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).OrderBy(p => p.PersonInfo.IdNumber).ToList();
         if (searchResults.Count == 0) {
@@ -71,9 +63,7 @@ public class PersonService : IPersonSource
         }
         else
         {
-            foreach (var item in searchResults) {
-                Console.WriteLine($"Search result: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
-            }
+            Print(searchResults);
         }
 
     }

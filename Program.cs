@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-
 
 namespace Register
 {
@@ -8,11 +8,40 @@ namespace Register
     {
         static async Task Main(string[] args)
         {
+            /*
+            async Task CommandHelperSearch(PersonService service, string name) 
+            {
+                await service.SearchPersonByName(name);
+            }
+            */
+
             if (args.Length > 0)
             {
-                foreach (var arg in args)
+                PersonService service = new PersonService(new JsonSampleSource());
+                var actions = new List<string> { "list" };
+                if (actions.Contains(args[0]))
                 {
-                    Console.WriteLine($"CMD LINE ARGUMENT: {arg}");
+                    if (args.Length == 1 && args[0] == "list")
+                    {
+                       await service.GetAllSortedById();
+                    }
+                    else if (args[0] == "list")
+                    {
+                        var commands = new Dictionary<string, Func<Task>>
+                        {
+                            ["--top5"] = service.GetFirstFiveSortedById,
+                            ["--sort"] = service.GetAllSortedByName,
+                            ["--sort --top5 "] = service.GetFirstFiveSortedByName,
+                            ["--search"] = () => service.SearchPersonByName(args[2])
+                        };
+                        foreach (var arg in args)
+                        {
+                            if (commands.TryGetValue(arg, out var command)) await command();
+                        }
+                    } else
+                    {
+                        Console.WriteLine("Invalid command");
+                    }
                 }
             }
             else
