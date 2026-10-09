@@ -24,7 +24,7 @@ public class PersonService : IPersonSource
     public static void Print(IEnumerable<Person> sortedList)
     {
             foreach (var item in sortedList) { 
-            Console.WriteLine($"Sorted order: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber}");
+            Console.WriteLine($"Search results: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber} \t{item.PersonInfo.Email}\t{item.AddressInfo.Street}\t{item.AddressInfo.City}\t{item.AddressInfo.PostalCode}\t{item.CompanyInfo.Name}\t{item.CompanyInfo.Slogan}");
         }
     }
 

@@ -63,7 +63,7 @@ Select the source you want
                     else if (menu == 2)
                     {
                         Console.WriteLine(@"
-1 = GetFirstFiveSortedByName, 2 = GetFirstFiveSortedById, 3 = GetAllSortedById, 4 = GetAllSortedByName, 5 = SearchPersonByName
+1 = GetAllSortedById, 2 = GetFirstFiveSortedById, 3 = GetAllSortedByName, 4 = GetFirstFiveSortedByName, 5 = SearchPersonByName
 
 r = return to main menu");
                     }
@@ -103,16 +103,16 @@ r = return to main menu");
                         switch (input)
                         {
                             case "1":
-                                await service.GetFirstFiveSortedByName();
+                                await service.GetAllSortedById();
                                 break;
                             case "2":
                                 await service.GetFirstFiveSortedById();
                                 break;
                             case "3":
-                                await service.GetAllSortedById();
+                                await service.GetAllSortedByName();
                                 break;
                             case "4":
-                                await service.GetAllSortedByName();
+                                await service.GetFirstFiveSortedByName();
                                 break;
                             case "5":
                                 Console.Write("Enter name to search: ");
