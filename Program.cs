@@ -21,9 +21,9 @@ namespace Register
                 var actions = new List<string> { "list" };
                 if (actions.Contains(args[0]))
                 {
-                    if (args.Length == 1 && args[0] == "list")
+                    if (args.Length == 1)
                     {
-                       await service.GetAllSortedById();
+                       if (args[0] == "list") await service.GetAllSortedById();
                     }
                     else if (args[0] == "list")
                     {
