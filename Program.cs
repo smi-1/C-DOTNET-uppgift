@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Register
 {
@@ -8,41 +6,42 @@ namespace Register
     {
         static async Task Main(string[] args)
         {
-            /*
-            async Task CommandHelperSearch(PersonService service, string name) 
-            {
-                await service.SearchPersonByName(name);
-            }
-            */
-
             if (args.Length > 0)
             {
-                PersonService service = new PersonService(new JsonSampleSource());
-                var actions = new List<string> { "list" };
-                if (actions.Contains(args[0]))
+                if (args[0] != "list")
                 {
-                    if (args.Length == 1)
+                    Console.WriteLine("Invalid command. Available commands: list, --sort, --top5, --search");
+                    return;
+                }
+
+                // Avkommentera en av dessa tre rader för att välja källa för kommandolinje versionen av programmet.
+                PersonService service = new PersonService(new JsonSampleSource());
+                // PersonService service = new PersonService(new JsonDataFileSource("PeopleSample.JSON"));
+                // PersonService service = new PersonService(new API());
+
+                bool _sort = args.Contains("--sort");
+                bool _top5 = args.Contains("--top5");
+                int _searchIndex = Array.IndexOf(args, "--search");
+                if (_searchIndex != -1)
+                {
+                    if (_sort || _top5)
                     {
-                       if (args[0] == "list") await service.GetAllSortedById();
+                        Console.WriteLine("--search cannot be used with --sort or --top5");
                     }
-                    else if (args[0] == "list")
+                    else if (_searchIndex + 1 < args.Length)
                     {
-                        var commands = new Dictionary<string, Func<Task>>
-                        {
-                            ["--top5"] = service.GetFirstFiveSortedById,
-                            ["--sort"] = service.GetAllSortedByName,
-                            ["--sort --top5 "] = service.GetFirstFiveSortedByName,
-                            ["--search"] = () => service.SearchPersonByName(args[2])
-                        };
-                        foreach (var arg in args)
-                        {
-                            if (commands.TryGetValue(arg, out var command)) await command();
-                        }
-                    } else
+                        string searchString = args[_searchIndex + 1];
+                        await service.SearchPersonByName(searchString);
+                    }
+                    else
                     {
-                        Console.WriteLine("Invalid command");
+                        Console.WriteLine("Please provide a search string after --search");
                     }
                 }
+                else if (_sort && _top5) { await service.GetFirstFiveSortedByName(); }
+                else if (_sort) { await service.GetAllSortedByName(); }
+                else if (_top5) { await service.GetFirstFiveSortedById(); }
+                else { await service.GetAllSortedById(); }
             }
             else
             {

@@ -4,7 +4,6 @@ using System.Text.Json;
 public class PersonService : IPersonSource
 {
     public List<Person> People { get; set; }
-    List<string> PersonListXS {get;set;} = new List<string>();
     private readonly IPersonSource _source;
 
     public PersonService(IPersonSource source)
@@ -23,8 +22,9 @@ public class PersonService : IPersonSource
     }
     public static void Print(IEnumerable<Person> sortedList)
     {
+            Console.WriteLine("Search results:");
             foreach (var item in sortedList) { 
-            Console.WriteLine($"Search results: {item.PersonInfo.Name}\t{item.PersonInfo.IdNumber} \t{item.PersonInfo.Email}\t{item.AddressInfo.Street}\t{item.AddressInfo.City}\t{item.AddressInfo.PostalCode}\t{item.CompanyInfo.Name}\t{item.CompanyInfo.Slogan}");
+            Console.WriteLine($"{item.PersonInfo.IdNumber,-6}  {item.PersonInfo.Name,-25}{item.PersonInfo.Email,-25}{item.AddressInfo.City,-22}{item.CompanyInfo.Name,-22}{item.CompanyInfo.Slogan,-22}");
         }
     }
 
